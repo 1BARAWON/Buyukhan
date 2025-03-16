@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERKAN AKİNCİ - Vitrifiye ve Banyo Ürünleri</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            border-bottom: 1px solid #eee;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 0;
+            display: block;
+        }
+        
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        nav ul li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu li {
+            margin: 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-menu li a {
+            padding: 12px 15px;
+            display: block;
+            font-weight: normal;
+            transition: background 0.3s;
+        }
+        
+        .dropdown-menu li a:hover {
+            background-color: #f9f9f9;
+        }
+        
+        /* Large Dropdown for Products */
+        .mega-dropdown {
+            position: absolute;
+            top: 100%;
+            left: -50%;
+            width: 700px;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        nav ul li:hover .mega-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .mega-dropdown-column h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .mega-dropdown-column ul {
+            display: block;
+        }
+        
+        .mega-dropdown-column ul li {
+            margin: 0;
+            border: none;
+        }
+        
+        .mega-dropdown-column ul li a {
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        
+        .all-products-link {
+            grid-column: span 3;
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .all-products-link a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .all-products-link a:hover {
+            background-color: #555;
+        }
+        
+        .search-icon {
+            font-size: 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: #f5f5f5;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #555;
+        }
+        
+        /* Featured Products */
+        .featured-products {
+            padding: 40px 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none; /* Altı çizili linkleri kaldırır */
+            color: inherit;
+        }
+        
+        .product-card:hover {
+            text-decoration: none; /* Altı çizili linkleri kaldırır */
+            color: inherit; /* Link rengini normal metin rengine çevirir */
+            display: block;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-image img {
+            max-width: 100%;
+            max-height: 180px;
+        }
+        
+        .product-info {
+            padding: 20px;
+            text-decoration: none; /* Altı çizili linkleri kaldırır */
+            color: inherit;
+            
+        }
+        
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+             text-decoration: none; /* Altı çizili linkleri kaldırır */
+            color: inherit;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #e63946;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Categories Section */
+        .categories {
+            padding: 40px 5%;
+            background-color: #f9f9f9;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .category-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        /* Store Location */
+        .store-location {
+            padding: 60px 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .location-image {
+            height: 400px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .location-info h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .location-info p {
+            margin-bottom: 15px;
+        }
+        
+        .location-meta {
+            margin-top: 30px;
+        }
+        
+        .location-meta p {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .location-meta span {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 60px 5% 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .mega-dropdown {
+                width: 90vw;
+                left: -100%;
+            }
+            
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+            
+            .store-location {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+                position: static;
+            }
+            
+            .mega-dropdown {
+                position: static;
+                width: 100%;
+                grid-template-columns: 1fr;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                padding: 15px;
+            }
+            
+            nav ul li:hover .mega-dropdown {
+                display: block;
+            }
+            
+            .all-products-link {
+                grid-column: 1;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mega-dropdown {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">BÜYÜKHAN</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li>
+                    <a href="products.html">Ürünler</a>
+                    <div class="mega-dropdown">
+                        <div class="mega-dropdown-column">
+                            <h3>Banyo Ürünleri</h3>
+                            <ul>
+                                <li><a href="products-bathroom-cabinets.html">Banyo Dolapları</a></li>
+                                <li><a href="products-bathroom-mirrors.html">Banyo Aynaları</a></li>
+                                <li><a href="products-bathroom-accessories.html">Banyo Aksesuarları</a></li>
+                                <li><a href="products-towel-rails.html">Havluluk ve Askılıklar</a></li>
+                                <li><a href="products-shower-cabin.html">Duşakabinler</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mega-dropdown-column">
+                            <h3>Vitrifiye Ürünleri</h3>
+                            <ul>
+                                <li><a href="products-toilets.html">Klozet ve Rezervuarlar</a></li>
+                                <li><a href="products-basins.html">Lavabolar</a></li>
+                                <li><a href="products-urinals.html">Pisuarlar</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mega-dropdown-column">
+                            <h3>Tesisat Ürünleri</h3>
+                            <ul>
+                                <li><a href="products-faucets.html">Armatürler</a></li>
+                                <li><a href="products-valves.html">Vanalar ve Bataryalar</a></li>
+                                <li><a href="products-drains.html">Sifonlar ve Süzgeçler</a></li>
+                                <li><a href="products-pipes.html">Borular ve Bağlantı Elemanları</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="all-products-link">
+                            <a href="all-products.html">Tüm Ürünleri Görüntüle</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="services.html">Hizmetler</a></li>
+                <li><a href="support.html">Destek</a></li>
+            </ul>
+        </nav>
+        <div>
+            <a href="#" class="search-icon">ARA</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Kaliteli Vitrifiye ve Banyo Çözümleri</h1>
+            <p>1995'ten beri Ankara'nın lider banyo ve vitrifiye tedarikçisi. En iyi markaları en uygun fiyatlarla sunuyoruz.</p>
+            <a href="all-products.html" class="btn">Ürünlerimizi Keşfedin</a>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+    <h2 class="section-title">Öne Çıkan Ürünlerimiz</h2>
+    <div class="products-grid">
+        <a href="dus1.html" class="product-card">
+            <div class="product-image">
+                <img src="duş1.jpg" alt="Duşakabin Örneği">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Premium Duşakabin 90x90</h3>
+                
+                <div class="product-price">₺4,850</div>
+                <div class="product-meta">
+                    <div>⭐⭐⭐⭐⭐ (24 Yorum)</div>
+                    <div>Stokta</div>
+                </div>
+            </div>
+        </a>
+            
+            <a href="lavabo1.html" class="product-card">
+                <div class="product-image">
+                    <img src="lavabo1.jpeg" alt="Lavabo Örneği">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Modern Seramik Lavabo</h3>
+                    <div class="product-price">₺2,350</div>
+                    <div class="product-meta">
+                        <div>⭐⭐⭐⭐ (18 Yorum)</div>
+                        <div>Stokta</div>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="dolap1.html" class="product-card">
+                <div class="product-image">
+                    <img src="dolap1.jpg" alt="Banyo Dolabı Örneği">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Lüks Banyo Dolabı 120cm</h3>
+                    <div class="product-price">₺7,650</div>
+                    <div class="product-meta">
+                        <div>⭐⭐⭐⭐⭐ (32 Yorum)</div>
+                        <div>Stokta</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+            </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <h2 class="section-title">Ürün Kategorileri</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-icon">🚿</div>
+                <h3 class="category-title">Duşakabinler</h3>
+                <p>Farklı ölçü ve modellerde duşakabin çeşitleri</p>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">🚽</div>
+                <h3 class="category-title">Klozet ve Rezervuarlar</h3>
+                <p>Modern ve klasik tasarım seçenekleri</p>
+            </div>
+                        
+            <div class="category-card">
+                <div class="category-icon">🧴</div>
+                <h3 class="category-title">Banyo Dolapları</h3>
+                <p>Şık ve fonksiyonel depolama çözümleri</p>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">🚰</div>
+                <h3 class="category-title">Armatürler</h3>
+                <p>Modern ve klasik musluk çeşitleri</p>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">🪞</div>
+                <h3 class="category-title">Banyo Aksesuarları</h3>
+                <p>Tamamlayıcı ürünler ve detaylar</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Store Location -->
+    <section class="store-location">
+        <div class="location-image">
+            <img src="buyuk.jpg" alt="Mağaza Görseli">
+        </div>
+        <div class="location-info">
+            <h2>Mağazamızı Ziyaret Edin</h2>
+            <p>Mağazalarımızda tüm ürünlerimizi inceleyebilirsiniz. Uzman ekibimiz size en uygun ürünü seçmenizde yardımcı olacaktır.</p>
+            <p>Showroom'umuzda en yeni modeller sergilenmektedir.</p>
+            
+            <div class="location-meta">
+                <p><span>Adres:</span> Esertepe, Çambaşı Cd., 06220 Keçiören/Ankara</p>
+                <p><span>Telefon:</span> (0312) 123 45 67</p>
+                <p><span>Çalışma Saatleri:</span> Hafta içi 08:30 - 18:30, Cumartesi 09:00 - 17:00</p>
+            </div>
+            
+            <a href="contact.html" class="btn">Bize Ulaşın</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>BÜYÜKHAN</h3>
+                <p>Adresimiz: Esertepe, Çambaşı Cd., 06220 Keçiören/Ankara</p>
+                <div class="social-links">
+                    <a href="#">Instagram</a>
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Hakkımızda</h3>
+                <ul>
+                    <li><a href="#">Hakkımızda</a></li>
+                    <li><a href="#">Vizyon & Misyon</a></li>
+                    <li><a href="#">İletişim</a></li>
+                    <li><a href="#">Kariyer</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Ürünler</h3>
+                <ul>
+                    <li><a href="products-shower-cabins.html">Duşakabin</a></li>
+                    <li><a href="products-toilets.html">Tuvalet Taşları</a></li>
+                    <li><a href="products-faucets.html">Armatürler</a></li>
+                    <li><a href="products-bathroom-cabinets.html">Banyo Dolapları</a></li>
+                    <li><a href="products-basins.html">Lavabolar</a></li>
+                    <li><a href="products-toilets.html">Klozet</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Müşteri Hizmetleri</h3>
+                <ul>
+                    <li><a href="#">Kataloglar</a></li>
+                    <li><a href="#">İletişim</a></li>
+                    <li><a href="#">Duşakabin Ölçü Şablonu</a></li>
+                    <li><a href="#">Sık Sorulan Sorular</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 BÜYÜKHAN. Tüm hakları saklıdır. | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım Şartları</a></p>
+        </div>
+    </footer>
+</body>
+</html>
