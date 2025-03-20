@@ -366,3 +366,19 @@ function filtreleTureGore(tur) {
     productsGrid.innerHTML += urunHTML;
   });
 }
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all product cards
+  const productCards = document.querySelectorAll('.product-card');
+  
+  // Add click event to each card
+  productCards.forEach((card, index) => {
+      card.addEventListener('click', function() {
+          // Navigate to product detail page with ID from your array
+          // Using index+1 to match your product IDs (assuming they start from 1)
+          window.location.href = `product-detail-page.html?id=${index+1}`;
+      });
+      
+      // Make cards look clickable
+      card.style.cursor = 'pointer';
+  });
+});
