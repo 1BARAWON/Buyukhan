@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destek - BÜYÜKHAN Vitrifiye ve Banyo Ürünleri</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        /* Destek Sayfası Özel Stilleri */
+        .support-hero {
+            background-color: #f5f5f5;
+            padding: 60px 5%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .support-hero h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .support-hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .support-content {
+            padding: 0 5% 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .support-section {
+            margin-bottom: 60px;
+        }
+
+        .support-section h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* FAQ Accordion Styles */
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background-color: #f9f9f9;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question:after {
+            content: '+';
+            font-size: 22px;
+            font-weight: 300;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-question:after {
+            content: '-';
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        /* Contact Form Styles */
+        .contact-form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-info {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 20px;
+        }
+
+        .contact-info-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-info-item span {
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Service Info Styles */
+        .service-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 30px;
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50px;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #128C7E;
+            transform: scale(1.05);
+        }
+
+        .whatsapp-icon {
+            margin-right: 8px;
+            font-size: 24px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .contact-form-container {
+                grid-template-columns: 1fr;
+            }
+
+            .whatsapp-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">BÜYÜKHAN</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li>
+                    <a href="all-products.html">Ürünler</a>
+                    <div class="mega-dropdown">
+                        <div class="mega-dropdown-column">
+                            <h3>Banyo Ürünleri</h3>
+                            <ul>
+                                <li><a href="products-bathroom-cabinets.html">Banyo Dolapları</a></li>
+                                <li><a href="products-bathroom-mirrors.html">Banyo Aynaları</a></li>
+                                <li><a href="products-bathroom-accessories.html">Banyo Aksesuarları</a></li>
+                                <li><a href="products-towel-rails.html">Havluluk ve Askılıklar</a></li>
+                                <li><a href="products-shower-cabins.html">Duşakabinler</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="mega-dropdown-column">
+                            <h3>Vitrifiye Ürünleri</h3>
+                            <ul>
+                                <li><a href="products-toilets.html">Klozet ve Rezervuarlar</a></li>
+                                <li><a href="products-basins.html">Lavabolar</a></li>
+                                <li><a href="products-urinals.html">Pisuarlar</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="mega-dropdown-column">
+                            <h3>Tesisat Ürünleri</h3>
+                            <ul>
+                                <li><a href="products-faucets.html">Armatürler</a></li>
+                                <li><a href="products-valves.html">Vanalar ve Bataryalar</a></li>
+                                <li><a href="products-drains.html">Sifonlar ve Süzgeçler</a></li>
+                                <li><a href="products-pipes.html">Borular ve Bağlantı Elemanları</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="all-products-link">
+                            <a href="all-products.html">Tüm Ürünleri Görüntüle</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="services.html">Hizmetler</a></li>
+                <li><a href="support.html">Destek</a></li>
+            </ul>
+        </nav>
+        <div>
+            <a href="#" class="search-icon">ARA</a>
+        </div>
+    </header>
+
+    <!-- Support Hero Section -->
+    <section class="support-hero">
+        <h1>Müşteri Destek Merkezi</h1>
+        <p>Ürünlerimiz veya hizmetlerimiz hakkında sorularınız mı var? Size yardımcı olmaktan memnuniyet duyarız.</p>
+        <a href="#contact-form" class="btn">İletişime Geçin</a>
+    </section>
+
+    <!-- Support Content -->
+    <div class="support-content">
+        <!-- FAQ Section -->
+        <section class="support-section" id="faq">
+            <h2>Sıkça Sorulan Sorular</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">Ürün garantileri ne kadar sürelidir?</div>
+                    <div class="faq-answer">
+                        <p>BÜYÜKHAN olarak tüm ürünlerimiz için minimum 2 yıl garanti sunmaktayız. Ayrıca, bazı özel serilerde 
+                            bu süre 5 yıla kadar uzamaktadır. Garanti kapsamı ürün kategorilerine göre değişiklik gösterebilir:</p>
+                        <ul>
+                            <li>Vitrifiye Ürünleri: 5 yıl</li>
+                            <li>Armatürler ve Bataryalar: 3 yıl</li>
+                            <li>Duşakabinler: 3 yıl</li>
+                            <li>Banyo Mobilyaları: 2 yıl</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Montaj hizmeti sunuyor musunuz?</div>
+                    <div class="faq-answer">
+                        <p>Evet, tüm ürünlerimiz için profesyonel montaj hizmeti sunmaktayız. Montaj hizmeti satın aldığınız 
+                            ürün paketine dahil değilse, ek ücret karşılığında uzman ekibimiz tarafından montaj işlemi 
+                            gerçekleştirilmektedir.</p>
+                        <p>Montaj randevusu için (0312) 123 45 67 numaralı telefondan bize ulaşabilirsiniz.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Ödeme seçenekleriniz nelerdir?</div>
+                    <div class="faq-answer">
+                        <p>Müşterilerimize çeşitli ödeme seçenekleri sunmaktayız:</p>
+                        <ul>
+                            <li>Nakit ödeme</li>
+                            <li>Kredi kartı ile ödeme (12 aya kadar taksit imkanı)</li>
+                            <li>Banka havalesi/EFT</li>
+                        </ul>
+                        <p>Ayrıca anlaşmalı bankalar ile 24 aya varan vade seçenekleriyle konut kredisi kullanılarak ödeme yapılabilir.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Arızalı ürün değişimi nasıl yapılır?</div>
+                    <div class="faq-answer">
+                        <p>Arızalı ürünlerin değişim süreci şu şekildedir:</p>
+                        <ol>
+                            <li>Destek hattımızı arayarak arıza bildiriminde bulunun: (0312) 123 45 67</li>
+                            <li>Teknik ekibimiz sorunu telefonda çözmeye çalışacaktır</li>
+                            <li>Gerekirse yerinde inceleme için randevu oluşturulacaktır</li>
+                            <li>Ürünün garantisi devam ediyorsa ve arıza kullanıcı hatasından kaynaklanmıyorsa, onarım veya değişim işlemleri ücretsiz olarak yapılacaktır</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Duşakabin ölçülerini nasıl belirleyebilirim?</div>
+                    <div class="faq-answer">
+                        <p>Duşakabin ölçülerini belirlemek için şu adımları izleyebilirsiniz:</p>
+                        <ol>
+                            <li>Duşakabin için ayrılan alanın genişliğini ve derinliğini ölçün</li>
+                            <li>Duvarların düzgünlüğünü kontrol edin</li>
+                            <li>Su giderinin konumunu belirleyin</li>
+                        </ol>
+                        <p>Eğer kendiniz ölçü almakta zorlanıyorsanız, ücretsiz keşif hizmetimizden faydalanabilirsiniz. 
+                           Uzman ekibimiz evinize gelerek gerekli ölçümleri yapacak ve size en uygun seçenekleri sunacaktır.</p>
+                        <p>Keşif randevusu için (0312) 123 45 67 numaralı telefondan bize ulaşabilirsiniz.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Teslimat süresi ne kadardır?</div>
+                    <div class="faq-answer">
+                        <p>Teslimat süreleri ürün kategorisine ve stok durumuna göre değişiklik göstermektedir:</p>
+                        <ul>
+                            <li>Stokta bulunan ürünler için: 1-3 iş günü</li>
+                            <li>Özel sipariş ürünleri için: 1-4 hafta</li>
+                        </ul>
+                        <p>Siparişinizin teslimat durumunu takip etmek için (0312) 123 45 67 numaralı telefondan müşteri hizmetlerimizle iletişime geçebilirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="support-section" id="contact-form">
+            <h2>İletişim Formu</h2>
+            <div class="contact-form-container">
+                <div class="contact-info">
+                    <h3>İletişim Bilgilerimiz</h3>
+                    <div class="contact-info-item">
+                        <span>Adres:</span>
+                        <div>Esertepe, Çambaşı Cd., 06220 Keçiören/Ankara</div>
+                    </div>
+                    <div class="contact-info-item">
+                        <span>Telefon:</span>
+                        <div>(0312) 123 45 67</div>
+                    </div>
+                    <div class="contact-info-item">
+                        <span>E-posta:</span>
+                        <div>info@buyukhan.com</div>
+                    </div>
+                    <div class="contact-info-item">
+                        <span>Çalışma Saatleri:</span>
+                        <div>Hafta içi 08:30 - 18:30, Cumartesi 09:00 - 17:00</div>
+                    </div>
+                    <div class="contact-info-item">
+                        <span>Sosyal Medya:</span>
+                        <div>
+                            <div class="social-links">
+                                <a href="#">Instagram</a>
+                                <a href="#">Facebook</a>
+                                <a href="#">Twitter</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Adınız Soyadınız</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-posta Adresiniz</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefon Numaranız</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Konu</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Seçiniz</option>
+                            <option value="product">Ürün Bilgisi</option>
+                            <option value="order">Sipariş Takibi</option>
+                            <option value="technical">Teknik Destek</option>
+                            <option value="return">İade ve Değişim</option>
+                            <option value="other">Diğer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mesajınız</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Gönder</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Montaj ve Teknik Servis Section -->
+        <section class="support-section" id="technical-service">
+            <h2>Montaj ve Teknik Servis</h2>
+            <div class="service-info-grid">
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3 class="service-title">Montaj Hizmetleri</h3>
+                    <p>Profesyonel montaj ekibimiz, tüm ürünlerinizin kurulumunu en yüksek kalite standartlarında gerçekleştirmektedir.</p>
+                    <p>Montaj hizmetimiz şunları içerir:</p>
+                    <ul>
+                        <li>Ürünün nakliyesi ve taşınması</li>
+                        <li>Profesyonel kurulum</li>
+                        <li>Kurulum sonrası temizlik</li>
+                        <li>Kullanım eğitimi</li>
+                    </ul>
+                    <p>Montaj randevusu için: (0312) 123 45 67</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3 class="service-title">Teknik Servis</h3>
+                    <p>Deneyimli teknik servis ekibimiz, ürünlerinizle ilgili her türlü sorunun çözümünde yanınızdadır.</p>
+                    <p>Teknik servis hizmetlerimiz:</p>
+                    <ul>
+                        <li>Arıza tespiti</li>
+                        <li>Onarım hizmetleri</li>
+                        <li>Parça değişimi</li>
+                        <li>Bakım hizmetleri</li>
+                    </ul>
+                    <p>Teknik servis için: (0312) 123 45 67</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3 class="service-title">Garanti İşlemleri</h3>
+                    <p>Ürünlerinizin garanti süresince her türlü işleminizi kolayca gerçekleştiriyoruz.</p>
+                    <p>Garanti hizmetlerimiz:</p>
+                    <ul>
+                        <li>Garanti kapsamında ücretsiz onarım</li>
+                        <li>Garanti kapsamında ücretsiz parça değişimi</li>
+                        <li>Gerektiğinde ürün değişimi</li>
+                        <li>Garanti belgesi yenileme</li>
+                    </ul>
+                    <p>Garanti işlemleri için: (0312) 123 45 67</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- WhatsApp Support Button -->
+    <a href="https://wa.me/903121234567" class="whatsapp-button">
+        <span class="whatsapp-icon">💬</span> WhatsApp Destek
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>BÜYÜKHAN</h3>
+                <p>Adresimiz: Esertepe, Çambaşı Cd., 06220 Keçiören/Ankara</p>
+                <div class="social-links">
+                    <a href="#">Instagram</a>
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Hakkımızda</h3>
+                <ul>
+                    <li><a href="#">Hakkımızda</a></li>
+                    <li><a href="#">Vizyon & Misyon</a></li>
+                    <li><a href="#">İletişim</a></li>
+                    <li><a href="#">Kariyer</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Ürünler</h3>
+                <ul>
+                    <li><a href="products-shower-cabins.html">Duşakabin</a></li>
+                    <li><a href="products-toilets.html">Tuvalet Taşları</a></li>
+                    <li><a href="products-faucets.html">Armatürler</a></li>
+                    <li><a href="products-bathroom-cabinets.html">Banyo Dolapları</a></li>
+                    <li><a href="products-basins.html">Lavabolar</a></li>
+                    <li><a href="products-toilets.html">Klozet</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Müşteri Hizmetleri</h3>
+                <ul>
+                    <li><a href="#">Kataloglar</a></li>
+                    <li><a href="#">İletişim</a></li>
+                    <li><a href="#">Duşakabin Ölçü Şablonu</a></li>
+                    <li><a href="#">Sık Sorulan Sorular</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 BÜYÜKHAN. Tüm hakları saklıdır. | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım
+                    Şartları</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for FAQ Accordion -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
