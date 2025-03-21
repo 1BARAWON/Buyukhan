@@ -1,42 +1,51 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Ürünler dizisinin yüklendiğinden emin ol
-    if (typeof urunler === 'undefined') {
-        console.error('Ürünler JSON verisi yüklenemedi!');
-        return;
-    }
-    
-    // Arama kutusunu ve butonu seç
     const searchInput = document.getElementById('search-input');
-    const searchButton = document.getElementById('search-button');
-    
-    // Arama butonuna tıklanınca arama yap
-    searchButton.addEventListener('click', function () {
-        searchProducts();
-    });
+    const searchResults = document.getElementById('search-results');
 
-    // Enter tuşuna basılınca arama yap
-    searchInput.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-            searchProducts();
-        }
+    // Arama çubuğuna yazıldıkça arama işlemi başlasın
+    searchInput.addEventListener('input', function () {
+        searchProducts();
     });
 
     function searchProducts() {
         const query = searchInput.value.toLowerCase().trim();
-        if (query === '') return;
+        searchResults.innerHTML = '';  // Önceki sonuçları temizle
 
-        // Aranan kelimeyi içeren ilk ürünü bul
-        const foundProduct = urunler.find(urun =>
+        if (query === '') {
+            searchResults.style.display = 'none';
+            return;
+        }
+
+        const filteredProducts = urunler.filter(urun =>
             urun.malzemeturu.toLowerCase().includes(query) ||
             urun.marka.toLowerCase().includes(query) ||
-            (urun.tur && urun.tur.toLowerCase().includes(query))
+            urun.tur.toLowerCase().includes(query)
         );
 
-        if (foundProduct) {
-            // Bulunan ürünü detay sayfasına yönlendir
-            window.location.href = `product-detail-page.html?id=${foundProduct.id}`;
-        } else {
-            alert('Sonuç bulunamadı.');
+        if (filteredProducts.length === 0) {
+            searchResults.style.display = 'none';
+            return;
         }
+
+        searchResults.style.display = 'block';
+
+        filteredProducts.forEach(product => {
+            const item = document.createElement('div');
+            item.classList.add('search-result-item');
+
+            item.innerHTML = `
+                <img src="${product.resim}" alt="${product.malzemeturu}" class="search-result-img">
+                <div>
+                    <div class="search-result-title">${product.malzemeturu}</div>
+                    <div class="search-result-price">${product.fiyat}₺</div>
+                </div>
+            `;
+
+            item.addEventListener('click', function() {
+                window.location.href = `product-detail-page.html?id=${product.id}`;
+            });
+
+            searchResults.appendChild(item);
+        });
     }
 });
