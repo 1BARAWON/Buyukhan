@@ -302,6 +302,33 @@
                 font-size: 14px;
             }
         }
+        .form-notification {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            color: white;
+        }
+        
+        .form-notification.success {
+            background-color: #4CAF50;
+        }
+        
+        .form-notification.error {
+            background-color: #e63946;
+        }
+        
+        .error-message {
+            color: #e63946;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .form-group input.error,
+        .form-group select.error,
+        .form-group textarea.error {
+            border-color: #e63946;
+        }
     </style>
 </head>
 
@@ -487,7 +514,7 @@
                     </div>
                 </div>
 
-                <form class="contact-form">
+                <form class="contact-form" action="contact-form-handler.php" method="post">
                     <div class="form-group">
                         <label for="name">Adınız Soyadınız</label>
                         <input type="text" id="name" name="name" required>
@@ -628,6 +655,7 @@
     <!-- JavaScript for FAQ Accordion -->
     <script src="urunler.js"></script>
     <script src="arama.js"></script>
+    <script src="contact-form.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const faqItems = document.querySelectorAll('.faq-item');
